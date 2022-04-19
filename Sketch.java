@@ -1,8 +1,22 @@
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class Sketch extends PApplet {
-	
-	
+	// global variables
+
+  // declare image variable for background
+  PImage imgHoop;
+
+  // ball dimensions
+  float fltBallX = width/4;
+  float fltBallY = width/8;
+  float fltBallDiameter = width/5;
+
+  // ball speed
+  float fltBallSpeedX = 1;
+  float fltBallSpeedY = 3;
+
+
   /**
    * Called once at the beginning of execution, put your size all in this method
    */
@@ -16,21 +30,30 @@ public class Sketch extends PApplet {
    * values here i.e background, stroke, fill etc.
    */
   public void setup() {
-    background(210, 255, 173);
+    imgHoop = loadImage("bball-hoop.jpg");
   }
 
   /**
    * Called repeatedly, anything drawn to the screen goes here
    */
   public void draw() {
-	  
-	// sample code, delete this stuff
-    stroke(128);
-    line(150, 25, 270, 350);  
+    // basketball hoop background
+    image(imgHoop, 0, 0);
+    imgHoop.resize(width, width);
 
-    stroke(255);
-    line(50, 125, 70, 50);  
-  }
+    // animated basketball
+    fill(245, 111, 66);
+    ellipse(fltBallX, fltBallY, fltBallDiameter, fltBallDiameter);
+    fltBallX += fltBallSpeedX;
+    fltBallY += fltBallSpeedY;
+    
+    //collision detection
+    if (fltBallX < 0 + 15 || fltBallX > width - 10) {
+      fltBallSpeedX *= -1;
+    }
   
-  // define other methods down here.
+    if (fltBallY < 0 + 15 || fltBallY > height - 15) {
+      fltBallSpeedY *= -1;
+    }
+  }
 }
