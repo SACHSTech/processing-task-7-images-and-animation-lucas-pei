@@ -1,20 +1,32 @@
 import processing.core.PApplet;
 import processing.core.PImage;
 
+/**
+ * Description: A program that animates Kobe Bryant and a basketball
+ */
+
 public class Sketch extends PApplet {
 	// global variables
 
   // declare image variable for background
   PImage imgHoop;
+  PImage imgKobe;
 
-  // ball dimensions
+  // ball coordinates
   float fltBallX = width/4;
-  float fltBallY = width/8;
+  float fltBallY = height/8;
   float fltBallDiameter = width/5;
 
   // ball speed
   float fltBallSpeedX = 1;
   float fltBallSpeedY = 3;
+
+  // Kobe's coordinates
+  float fltKobeX = 25;
+  float fltKobeY = 375;
+
+  // Kobe's speed
+  float fltKobeSpeedX = 3;
 
 
   /**
@@ -31,6 +43,11 @@ public class Sketch extends PApplet {
    */
   public void setup() {
     imgHoop = loadImage("bball-hoop.jpg");
+    imgHoop.resize(width, height);
+
+    imgKobe = loadImage("mamba.png");
+    imgKobe.resize(width/5, height/6);
+
   }
 
   /**
@@ -39,21 +56,34 @@ public class Sketch extends PApplet {
   public void draw() {
     // basketball hoop background
     image(imgHoop, 0, 0);
-    imgHoop.resize(width, width);
 
-    // animated basketball
+    // animated basketball with collision detection
     fill(245, 111, 66);
     ellipse(fltBallX, fltBallY, fltBallDiameter, fltBallDiameter);
     fltBallX += fltBallSpeedX;
     fltBallY += fltBallSpeedY;
     
-    //collision detection
     if (fltBallX < 0 + 15 || fltBallX > width - 10) {
       fltBallSpeedX *= -1;
     }
   
     if (fltBallY < 0 + 15 || fltBallY > height - 15) {
       fltBallSpeedY *= -1;
+    }
+    
+    // Kobe Bryant animated with collision detection
+    image(imgKobe, fltKobeX, fltKobeY);
+    
+    float fltParabola = (float) Math.pow(1.5 * fltKobeX - 200, 2);
+
+    fltKobeX = fltKobeX + fltKobeSpeedX;
+    fltKobeY = fltParabola / 225;
+
+    if (fltKobeX < 0 || fltKobeX > width - 80) {
+      fltKobeSpeedX *= -1;
+    }
+    if (fltKobeY < 0 + 15 || fltKobeY > height - 15) {
+      fltParabola *= -1;
     }
   }
 }
