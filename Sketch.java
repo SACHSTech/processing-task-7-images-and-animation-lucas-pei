@@ -2,13 +2,14 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 /**
- * Description: A program that animates Kobe Bryant and a basketball
+ * Description: A program that animates Kobe Bryant and a basketball with a basketball hoop in the background
+ * @author: L. Pei 
  */
 
 public class Sketch extends PApplet {
 	// global variables
 
-  // declare image variable for background
+  // declare global image variables
   PImage imgHoop;
   PImage imgKobe;
 
@@ -42,6 +43,7 @@ public class Sketch extends PApplet {
    * values here i.e background, stroke, fill etc.
    */
   public void setup() {
+    // assign images to global image variables
     imgHoop = loadImage("bball-hoop.jpg");
     imgHoop.resize(width, height);
 
@@ -57,7 +59,7 @@ public class Sketch extends PApplet {
     // basketball hoop background
     image(imgHoop, 0, 0);
 
-    // animated basketball with collision detection
+    // basketball animated linearly with collision detection
     fill(245, 111, 66);
     ellipse(fltBallX, fltBallY, fltBallDiameter, fltBallDiameter);
     fltBallX += fltBallSpeedX;
@@ -71,10 +73,10 @@ public class Sketch extends PApplet {
       fltBallSpeedY *= -1;
     }
     
-    // Kobe Bryant animated with collision detection
+    // Kobe Bryant animated parabolically with collision detection
     image(imgKobe, fltKobeX, fltKobeY);
     
-    float fltParabola = (float) Math.pow(1.5 * fltKobeX - 200, 2);
+    float fltParabola = (float)Math.pow(1.5 * fltKobeX - 200, 2);
 
     fltKobeX = fltKobeX + fltKobeSpeedX;
     fltKobeY = fltParabola / 225;
